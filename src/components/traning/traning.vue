@@ -45,6 +45,8 @@
 import axios from 'axios'
 import Scroll from '@/components/base/scroll'
 import Loading from '@/components/base/loading'
+import {getSpecialty} from '@/common/js/userInfo'
+
 var ERROK = 0
 
 export default {
@@ -58,9 +60,13 @@ export default {
     }
   },
   created() {
+    this._getSpecialty()
     this._requestData()
   },
   methods: {
+    _getSpecialty() {
+      console.log(getSpecialty())
+    },
     scrollToEnd() {
       if (ERROK === 0) {
         this.page++
