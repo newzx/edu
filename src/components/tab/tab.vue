@@ -6,7 +6,7 @@
     <router-link tag="div" class="tab-item" to="/goodke">
       <span class="tab-link">精品课</span>
     </router-link>
-    <router-link tag="div" class="tab-item" to="/opneke">
+    <router-link tag="div" class="tab-item" to="/openke">
       <span class="tab-link">公开课</span>
     </router-link>
   </div>
@@ -31,7 +31,7 @@
     position: fixed;
     left: 0;
     top: 45px;
-    z-index: 999;
+    z-index: 998;
 }
 
 .tab-item span {

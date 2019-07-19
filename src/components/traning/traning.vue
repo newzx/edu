@@ -45,13 +45,15 @@
 import axios from 'axios'
 import Scroll from '@/components/base/scroll'
 import Loading from '@/components/base/loading'
-import {getSpecialty} from '@/common/js/userInfo'
 
 var ERROK = 0
 
 export default {
   data() {
     return {
+      specialty_id: this.$store.state.specialty_id,
+      course_type: 3,
+      url: '',
       dataList: [],
       page: 1,
       pullup: true,
@@ -60,12 +62,12 @@ export default {
     }
   },
   created() {
-    this._getSpecialty()
+    this._dataUrl()
     this._requestData()
   },
   methods: {
-    _getSpecialty() {
-      console.log(getSpecialty())
+    _dataUrl() {
+      this.url = '/api/openapi/lesson/getLessonListForApi?limit=10&specialty_id=' + this.specialty_id + '&course_type=' + this.course_type + '&page='
     },
     scrollToEnd() {
       if (ERROK === 0) {
@@ -74,7 +76,7 @@ export default {
       }
     },
     _loadData(page) {
-      let url = '/api/openapi/lesson/getLessonListForApi?specialty_id=1&page=' + page + '&limit=10&type=2'
+      let url = this.url + page
       this.isLoading = true // 正在加载数据
       setTimeout(() => {
         this.isLoading = false
@@ -90,10 +92,24 @@ export default {
       })
     },
     _requestData() {
-      axios.get('/api/openapi/lesson/getLessonListForApi?specialty_id=1&page=1&limit=10&type=2').then((res) => {
+      axios.get(this.url + this.page).then((res) => {
         this.dataList = res.data.result.lists
         ERROK = res.data.errNo
       })
+    }
+  },
+  computed: {
+    change() {
+      return this.$store.state.specialty_id // 需要监听的数据
+    }
+  },
+  watch: {
+    change(newVal, oldVal) {
+      this.page = 1
+      this.specialty_id = this.$store.state.specialty_id
+      this._dataUrl()
+      this._requestData()
+      this.$refs.scroll.refresh()
     }
   },
   components: {
