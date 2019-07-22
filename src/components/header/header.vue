@@ -12,7 +12,7 @@
         </div>
       </a>
       <div class="search_chooise" @click="layershow">
-        <span class="now-zy" ref="nowzy">建筑设计</span><img src="@/assets/header/down.png" alt="">
+        <span class="now-zy" ref="nowzy">{{specialty_name}}</span><img src="@/assets/header/down.png" alt="">
       </div>
     </div>
     <div class="select-box" v-show="onoff">
@@ -23,7 +23,7 @@
               <img :src="items.icon" alt=""> {{items.bigspecialty}}
            </p>
            <p class="major-wrapper">
-              <span v-for="(item, index) in items.data" :key="index" :data-zy="item.specialty_id" @click="changeSpecialty">{{item.specialty_name}}</span>
+              <span class="specialty" v-for="(item, index) in items.data" :key="index" :data-zy="item.specialty_id" @click="changeSpecialty">{{item.specialty_name}}</span>
            </p>
         </div>
       </div>
@@ -35,18 +35,22 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-const nameList = {}
+
 export default{
   data() {
     return {
       onoff: false,
-      specialty_name: '',
-      resultList: []    
+      specialty_id: '',
+      specialty_name: '建筑设计',
+      resultList: []
     }
   },
   created() {
     this.getSpecialty()
     this.getAllspecialty()
+    setTimeout(() => {
+      this.getNowSpecialty()
+    }, 500)
   },
   methods: {
     layershow() {
@@ -62,20 +66,32 @@ export default{
       } else {
         this.$store.state.specialty_id = 1
       }
+      this.specialty_id = this.$store.state.specialty_id
+    },
+    getAllspecialty() {
+      axios.get('api/openapi/lesson/getAllspecialty').then((res) => {
+        if (res.status === 200) {
+          this.resultList = res.data.result
+        }
+      })
+    },
+    getNowSpecialty() {
+      // 根据后台数据和cookie获取当前所选的专业
+      let nameArr = this.resultList
+      let nameList = {}
+      for (var i in nameArr) {
+        for (var k in nameArr[i].data) {
+          nameList[nameArr[i].data[k].specialty_id] = nameArr[i].data[k].specialty_name
+        }
+      }
+      this.specialty_name = nameList[this.specialty_id.toString()]
     },
     changeSpecialty(e) {
       this.onoff = false
-      this.$refs.nowzy.innerHTML = e.target.innerHTML
-      let channel = e.target.getAttribute('data-zy');
-      this.$store.dispatch('changeSpecialty', channel)
-    },
-    getAllspecialty() {
-      axios.get('/api/openapi/lesson/getAllspecialty').then((res) => {
-        if (res.status === 200) {
-          this.resultList = res.data.result;
-          console.log(this.resultList)
-        }
-      })
+      this.$refs.nowzy.innerHTML = e.target.innerHTML // 改写当前专业
+      let specialty = e.target.getAttribute('data-zy');
+      this.$store.dispatch('changeSpecialty', specialty) // 修改全局的state,并重新载入数据
+      Cookies.set('specialty_id', specialty, {expires: 7})
     }
   }
 }

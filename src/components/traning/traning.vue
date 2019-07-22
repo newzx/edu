@@ -46,7 +46,7 @@ import axios from 'axios'
 import Scroll from '@/components/base/scroll'
 import Loading from '@/components/base/loading'
 
-var ERROK = 0
+var ERR_OK = 0
 
 export default {
   data() {
@@ -67,10 +67,10 @@ export default {
   },
   methods: {
     _dataUrl() {
-      this.url = '/api/openapi/lesson/getLessonListForApi?limit=10&specialty_id=' + this.specialty_id + '&course_type=' + this.course_type + '&page='
+      this.url = 'api/openapi/lesson/getLessonListForApi?limit=10&specialty_id=' + this.specialty_id + '&course_type=' + this.course_type + '&page='
     },
     scrollToEnd() {
-      if (ERROK === 0) {
+      if (ERR_OK === 0) {
         this.page++
         this._loadData(this.page)
       }
@@ -82,10 +82,10 @@ export default {
         this.isLoading = false
       }, 3000)
       axios.get(url).then((res) => {
-        ERROK = res.data.errNo
+        ERR_OK = res.data.errNo
         let newlist = res.data.result.lists
         if (newlist.length < 10) {
-          ERROK = 1
+          ERR_OK = 1
           this.loadEnd = true // 当前页面全部数据加载完成
         }
         this.dataList = this.dataList.concat(newlist)
@@ -94,7 +94,7 @@ export default {
     _requestData() {
       axios.get(this.url + this.page).then((res) => {
         this.dataList = res.data.result.lists
-        ERROK = res.data.errNo
+        ERR_OK = res.data.errNo
       })
     }
   },
@@ -107,7 +107,7 @@ export default {
     change(newVal, oldVal) {
       this.page = 1
       this.specialty_id = this.$store.state.specialty_id
-      this._dataUrl()
+      this._dataUrl() // state变化重新计算url并请求数据 刷新better-scroll
       this._requestData()
       this.$refs.scroll.refresh()
     }

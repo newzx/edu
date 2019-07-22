@@ -6,13 +6,13 @@ const state = {
   specialty_id: ''
 }
 const mutations = {
-  changeSpecialty(state, channel) {
-    state.specialty_id = channel
+  changeSpecialty(state, specialty) {
+    state.specialty_id = specialty
   }
 }
 const actions = {
-  changeSpecialty(context, channel) {
-    context.commit('changeSpecialty', channel)
+  changeSpecialty(context, specialty) {
+    context.commit('changeSpecialty', specialty)
   }
 }
 const store = new Vuex.Store({

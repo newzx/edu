@@ -32,8 +32,8 @@ module.exports = {
      // 函数定义时括号前要不要有空格
      'space-before-function-paren': [0],
      // 空行最多不能超过5行
-     'no-multiple-empty-lines': [1, {"max": 5}]
+     'no-multiple-empty-lines': [1, {"max": 5}],
      // 允许下划线式的命名方式
-     //'camelcase': [0, {"properties": "never"}]
+     'camelcase': [0, {"properties": "never"}]
   }
 }

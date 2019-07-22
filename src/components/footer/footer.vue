@@ -2,7 +2,7 @@
   <div class="footer">
     <ul>
       <li>
-        <a href="">
+        <a href="http://m.zhulong.com">
           <img src="@/common/img/index.png" alt="">
           主页
         </a>
@@ -14,13 +14,13 @@
         </a>
       </li>
       <li>
-        <a href="http://vip.zhulong.com">
+        <a href="http://vip.zhulong.com/lesson_oth">
           <img src="@/common/img/vip.png" alt="">
           VIP
         </a>
       </li>
       <li>
-        <a href="">
+        <a href="http://m.bbs.zhulong.com">
           <img src="@/common/img/bbs.png" alt="">
           社区
         </a>
