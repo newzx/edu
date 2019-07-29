@@ -8,6 +8,8 @@ import '@/common/css/reset.css'
 
 Vue.config.productionTip = false
 
+Vue.prototype.API = process.env.API
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

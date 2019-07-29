@@ -69,7 +69,7 @@ export default{
       this.specialty_id = this.$store.state.specialty_id
     },
     getAllspecialty() {
-      axios.get('api/openapi/lesson/getAllspecialty').then((res) => {
+      axios.get('/openapi/lesson/getAllspecialty').then((res) => {
         if (res.status === 200) {
           this.resultList = res.data.result
         }

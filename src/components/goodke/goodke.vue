@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     _dataUrl() {
-      this.url = 'api/openapi/lesson/getLessonListForApi?limit=10&specialty_id=' + this.specialty_id + '&course_type=' + this.course_type + '&page='
+      this.url = '/openapi/lesson/getLessonListForApi?limit=10&specialty_id=' + this.specialty_id + '&course_type=' + this.course_type + '&page='
     },
     scrollToEnd() {
       if (ERR_OK === 0) {
