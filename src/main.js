@@ -5,10 +5,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 import '@/common/css/reset.css'
+import '@/common/css/list.css'
 
 Vue.config.productionTip = false
-
-Vue.prototype.API = process.env.API
 
 /* eslint-disable no-new */
 new Vue({

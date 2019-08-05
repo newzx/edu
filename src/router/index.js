@@ -7,6 +7,7 @@ import Openke from '@/components/openke/openke'
 Vue.use(Router)
 
 export default new Router({
+  base: '/dist/',
   mode: 'history',
   routes: [
     {

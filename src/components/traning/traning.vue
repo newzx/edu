@@ -46,8 +46,6 @@ import axios from 'axios'
 import Scroll from '@/components/base/scroll'
 import Loading from '@/components/base/loading'
 
-var ERR_OK = 0
-
 export default {
   data() {
     return {
@@ -70,7 +68,7 @@ export default {
       this.url = '/openapi/lesson/getLessonListForApi?limit=10&specialty_id=' + this.specialty_id + '&course_type=' + this.course_type + '&page='
     },
     scrollToEnd() {
-      if (ERR_OK === 0) {
+      if (!this.loadEnd) {
         this.page++
         this._loadData(this.page)
       }
@@ -82,10 +80,8 @@ export default {
         this.isLoading = false
       }, 3000)
       axios.get(url).then((res) => {
-        ERR_OK = res.data.errNo
         let newlist = res.data.result.lists
         if (newlist.length < 10) {
-          ERR_OK = 1
           this.loadEnd = true // 当前页面全部数据加载完成
         }
         this.dataList = this.dataList.concat(newlist)
@@ -94,7 +90,6 @@ export default {
     _requestData() {
       axios.get(this.url + this.page).then((res) => {
         this.dataList = res.data.result.lists
-        ERR_OK = res.data.errNo
       })
     }
   },
@@ -120,102 +115,4 @@ export default {
 </script>
 
 <style scoped  rel="stylesheet/stylus">
-  .traning{
-    position: fixed;
-    width: 100%;
-    top: 103px;
-    bottom: 50px;
-  }
-  .traning-content{
-    height: 100%;
-    overflow: hidden;
-    padding: 15px 0 10px;
-  }
-  .ke-list{
-    display: block;
-  }
-  .ke-box{
-    width: 92%;
-    padding: 4% 0;
-    margin: 0 4%;
-    background: white;
-    height: 75px;
-    border-bottom: 1px solid #F0F0F0;
-    display: block;
-  }
-  .ke-left{
-    float: left;
-    height: 100%;
-    width: 36%;
-    position: relative;
-  }
-  .ke-right{
-    float: left;
-    height: 100%;
-    width: 62%;
-    padding-left: 2%;
-    position: relative;
-  }
-  .ke-img{
-    display: block;
-    width: 100%;
-    height: 100%;
-    float: left;
-    min-width: 91px;
-  }
-  .ke-name{
-    font-size: 16px;
-    color: #333;
-    line-height: 19px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .ke-detail{
-    font-size: 12px;
-    color: #999999;
-    width: 100%;
-    overflow: hidden;
-    line-height: 20px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding-top:2px;
-  }
-  .ke-team {
-    margin-right: 10px;
-  }
-  .ke-team img{
-    width: 15px;
-    position: relative;
-    top: 1px;
-  }
-  .ke-praise img{
-    width: 12px;
-    position: relative;
-    top: 1px;
-  }
-  .ke-price{
-    color: #ee2e2f;
-    font-size: 14px;
-    position: absolute;
-    bottom: 0;
-    line-height: 14px;
-  }
-  .tip-box{
-    display: block;
-    height: 20px;
-    padding: 5px;
-  }
-  .loading-container{
-    width: 100%;
-    padding: 5px 0 20px;
-  }
-  .load-end{
-    font-size: 14px;
-    color: #333;
-    line-height: 20px;
-    text-align: center
-  }
 </style>

@@ -3,6 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const edu_api = 'http://edu.zhulong.com'
 
 module.exports = {
   dev: {
@@ -11,7 +12,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api': {
+      '/openapi': {
         target: 'http://edu.zhulong.com',
         changeOrigin: true,
         pathRewrite: {
