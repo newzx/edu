@@ -15,7 +15,7 @@ const actions = {
     context.commit('changeSpecialty', specialty)
   }
 }
-const store = new Vuex.Store({
+const store = new Vuex.Store({ // 创建vuex实例
   state,
   actions,
   mutations
